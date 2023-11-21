@@ -46,9 +46,13 @@ def predict():
 
         # Make predictions
         predictions = model.predict(features_scaled)
-        predictions = np.round(predictions).flatten()
+        probability_positive_class = predictions.flatten()[0]  # Extract probability for the positive class
+        response = {
+            'predictions': np.round(predictions).flatten().tolist(),
+            'probability_positive_class': probability_positive_class.tolist()*100
+        }
 
-        return jsonify({'predictions': predictions.tolist()})
+        return jsonify(response)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

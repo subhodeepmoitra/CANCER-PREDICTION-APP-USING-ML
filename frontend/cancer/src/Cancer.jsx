@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './cancer.css';
 
 function App() {
   const [formData, setFormData] = useState({
     GENDER: '1',
-    AGE: '',
+    AGE: '0',
     SMOKING: '1',
     YELLOW_FINGERS: '1',
     ANXIETY: '1',
@@ -21,6 +22,7 @@ function App() {
   });
 
   const [predictions, setPredictions] = useState(null);
+  const [probability, setProbability] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -31,13 +33,14 @@ function App() {
     try {
       const response = await axios.post('http://localhost:5000/predict', formData);
       setPredictions(response.data.predictions);
+      setProbability(response.data.probability_positive_class);
     } catch (error) {
       console.error('Error making prediction:', error);
     }
   };
 
   return (
-    <div>
+    <div className="app-container">
       <h1>Lung Cancer Prediction</h1>
       <form>
        {/*  <div>
@@ -47,70 +50,72 @@ function App() {
             <option value="2">Female</option>
           </select>
         </div> */}
-         <div>
-          <label htmlFor="GENDER">GENDER:</label>
-          <input type="text" name="GENDER" value={formData.GENDER} onChange={handleInputChange} />
+         <div className="form-group">
+          <label className='input-group-text' htmlFor="GENDER">GENDER:</label>
+          <input className='form-control' type="text" name="GENDER" value={formData.GENDER} onChange={handleInputChange} required/>
         </div>
         <div>
-          <label htmlFor="AGE">AGE:</label>
-          <input type="text" name="AGE" value={formData.AGE} onChange={handleInputChange} />
+          <label className='input-group-text'  htmlFor="AGE">AGE:</label>
+          <input className='form-control' type="text" name="AGE" value={formData.AGE} onChange={handleInputChange} />
         </div>
-        <div>
-          <label htmlFor="AGE">SMOKING:</label>
-          <input type="text" name="SMOKING" value={formData.SMOKING} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">SMOKING:</label>
+          <input className='form-control' type="text" name="SMOKING" value={formData.SMOKING} onChange={handleInputChange} required/>
         </div>
-        <div>
-          <label htmlFor="AGE">YELLOW_FINGERS:</label>
-          <input type="text" name="YELLOW_FINGERS" value={formData.YELLOW_FINGERS} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">YELLOW_FINGERS:</label>
+          <input className='form-control' type="text" name="YELLOW_FINGERS" value={formData.YELLOW_FINGERS} onChange={handleInputChange} required/>
         </div>
-        <div>
-          <label htmlFor="AGE">ANXIETY:</label>
-          <input type="text" name="ANXIETY" value={formData.ANXIETY} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">ANXIETY:</label>
+          <input className='form-control' type="text" name="ANXIETY" value={formData.ANXIETY} onChange={handleInputChange} required/>
         </div>
-        <div>
-          <label htmlFor="AGE">PEER_PRESSURE:</label>
-          <input type="text" name="PEER_PRESSURE" value={formData.PEER_PRESSURE} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">PEER_PRESSURE:</label>
+          <input className='form-control' type="text" name="PEER_PRESSURE" value={formData.PEER_PRESSURE} onChange={handleInputChange} required/>
         </div>
-        <div>
-          <label htmlFor="AGE">CHRONIC_DISEASE:</label>
-          <input type="text" name="CHRONIC_DISEASE" value={formData.CHRONIC_DISEASE} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">CHRONIC_DISEASE:</label>
+          <input className='form-control' type="text" name="CHRONIC_DISEASE" value={formData.CHRONIC_DISEASE} onChange={handleInputChange} required/>
         </div>
-        <div>
-          <label htmlFor="AGE">FATIGUE:</label>
-          <input type="text" name="FATIGUE" value={formData.FATIGUE} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">FATIGUE:</label>
+          <input className='form-control' type="text" name="FATIGUE" value={formData.FATIGUE} onChange={handleInputChange} required/>
         </div>
-        <div>
-          <label htmlFor="AGE">ALLERGY:</label>
-          <input type="text" name="ALLERGY" value={formData.ALLERGY} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">ALLERGY:</label>
+          <input className='form-control' type="text" name="ALLERGY" value={formData.ALLERGY} onChange={handleInputChange} required/>
         </div>
-        <div>
-          <label htmlFor="AGE">WHEEZING:</label>
-          <input type="text" name="WHEEZING" value={formData.WHEEZING} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">WHEEZING:</label>
+          <input className='form-control' type="text" name="WHEEZING" value={formData.WHEEZING} onChange={handleInputChange} required/>
         </div>
-        <div>
-          <label htmlFor="AGE">ALCOHOL_CONSUMING:</label>
-          <input type="text" name="ALCOHOL_CONSUMING" value={formData.ALCOHOL_CONSUMING} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">ALCOHOL_CONSUMING:</label>
+          <input className='form-control' type="text" name="ALCOHOL_CONSUMING" value={formData.ALCOHOL_CONSUMING} onChange={handleInputChange} required/>
         </div>
-        <div>
-          <label htmlFor="AGE">COUGHING:</label>
-          <input type="text" name="COUGHING" value={formData.COUGHING} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">COUGHING:</label>
+          <input className='form-control' type="text" name="COUGHING" value={formData.COUGHING} onChange={handleInputChange} required/>
         </div>
-        <div>
-          <label htmlFor="AGE">SHORTNESS_OF_BREATH:</label>
-          <input type="text" name="SHORTNESS_OF_BREATH" value={formData.SHORTNESS_OF_BREATH} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">SHORTNESS_OF_BREATH:</label>
+          <input className='form-control' type="text" name="SHORTNESS_OF_BREATH" value={formData.SHORTNESS_OF_BREATH} onChange={handleInputChange} required/>
         </div>
-        <div>
-          <label htmlFor="AGE">SWALLOWING_DIFFICULTY:</label>
-          <input type="text" name="SWALLOWING_DIFFICULTY" value={formData.SWALLOWING_DIFFICULTY} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">SWALLOWING_DIFFICULTY:</label>
+          <input className='form-control' type="text" name="SWALLOWING_DIFFICULTY" value={formData.SWALLOWING_DIFFICULTY} onChange={handleInputChange} required/>
         </div>
-        <div>
-          <label htmlFor="AGE">CHEST_PAIN:</label>
-          <input type="text" name="CHEST_PAIN" value={formData.CHEST_PAIN} onChange={handleInputChange} />
+        <div className="form-group">
+          <label className='input-group-text' htmlFor="AGE">CHEST_PAIN:</label>
+          <input className='form-control' type="text" name="CHEST_PAIN" value={formData.CHEST_PAIN} onChange={handleInputChange} required/>
+          &nbsp;
         </div>
+        &nbsp;
 
         {/* Repeat the pattern for other form fields */}
         {/* ... */}
-        <button type="button" onClick={handlePredict}>
+        <button className='btn btn-info' type="button" onClick={handlePredict}>
           Predict
         </button>
       </form>
@@ -118,6 +123,7 @@ function App() {
       <div>
         <h2>Predictions:</h2>
         <p>{predictions.join(',')}</p>
+        <p>{`Probability: ${probability}`}</p>
       </div>
     )}
     </div>
