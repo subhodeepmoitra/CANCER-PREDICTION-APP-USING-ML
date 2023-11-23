@@ -12,7 +12,7 @@ CORS(app)
 model = load_model('cancer_webapp2.h5')
 
 # Load the trained StandardScaler
-scaler = joblib.load('scaler.joblib')  # Assuming you saved the scaler using joblib
+scaler = joblib.load('scaler.joblib')  
 
 @app.route('/predict', methods=['POST'])
 def predict():
