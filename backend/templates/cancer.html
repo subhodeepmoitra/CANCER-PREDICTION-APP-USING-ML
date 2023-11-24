@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Lung Cancer Prediction</title>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Lung Cancer Prediction</h1>
+        <form id="cancerForm">
+            <div className="form-group">
+                <label className='input-group-text' htmlFor="GENDER">GENDER:</label>
+                <input className='form-control' type="text" name="GENDER"  required/>
+              </div>
+              <div>
+                <label className='input-group-text'  htmlFor="AGE">AGE:</label>
+                <input className='form-control' type="text" name="AGE"  />
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">SMOKING:</label>
+                <input className='form-control' type="text" name="SMOKING"  required/>
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">YELLOW_FINGERS:</label>
+                <input className='form-control' type="text" name="YELLOW_FINGERS"  required/>
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">ANXIETY:</label>
+                <input className='form-control' type="text" name="ANXIETY"  required/>
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">PEER_PRESSURE:</label>
+                <input className='form-control' type="text" name="PEER_PRESSURE" required/>
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">CHRONIC_DISEASE:</label>
+                <input className='form-control' type="text" name="CHRONIC_DISEASE"  required/>
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">FATIGUE:</label>
+                <input className='form-control' type="text" name="FATIGUE"  required/>
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">ALLERGY:</label>
+                <input className='form-control' type="text" name="ALLERGY"  required/>
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">WHEEZING:</label>
+                <input className='form-control' type="text" name="WHEEZING"  required/>
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">ALCOHOL_CONSUMING:</label>
+                <input className='form-control' type="text" name="ALCOHOL_CONSUMING"  required/>
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">COUGHING:</label>
+                <input className='form-control' type="text" name="COUGHING"  required/>
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">SHORTNESS_OF_BREATH:</label>
+                <input className='form-control' type="text" name="SHORTNESS_OF_BREATH" required/>
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">SWALLOWING_DIFFICULTY:</label>
+                <input className='form-control' type="text" name="SWALLOWING_DIFFICULTY"  required/>
+              </div>
+              <div className="form-group">
+                <label className='input-group-text' htmlFor="AGE">CHEST_PAIN:</label>
+                <input className='form-control' type="text" name="CHEST_PAIN"  required/>
+                &nbsp;
+              </div>
+              &nbsp;
+      
+            <!-- Add other form fields as needed -->
+
+            <button class="btn btn-info" type="button" onclick="predict()">Predict</button>
+        </form>
+
+        <div id="prediction-results" class="mt-4">
+            <!-- Results from the backend will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        function predict() {
+            // Collect form data
+            var formData = {
+                'GENDER': document.getElementsByName('GENDER')[0].value,
+                'AGE': document.getElementsByName('AGE')[0].value,
+                'SMOKING': document.getElementsByName('SMOKING')[0].value,
+                'YELLOW_FINGERS': document.getElementsByName('YELLOW_FINGERS')[0].value,
+                'ANXIETY': document.getElementsByName('ANXIETY')[0].value,
+                'PEER_PRESSURE': document.getElementsByName('PEER_PRESSURE')[0].value,
+                'CHRONIC_DISEASE': document.getElementsByName('CHRONIC_DISEASE')[0].value,
+                'FATIGUE': document.getElementsByName('FATIGUE')[0].value,
+                'ALLERGY': document.getElementsByName('ALLERGY')[0].value,
+                'WHEEZING': document.getElementsByName('WHEEZING')[0].value,
+                'ALCOHOL_CONSUMING': document.getElementsByName('ALCOHOL_CONSUMING')[0].value,
+                'COUGHING': document.getElementsByName('COUGHING')[0].value,
+                'SHORTNESS_OF_BREATH': document.getElementsByName('SHORTNESS_OF_BREATH')[0].value,
+                'SWALLOWING_DIFFICULTY': document.getElementsByName('SWALLOWING_DIFFICULTY')[0].value,
+                'CHEST_PAIN': document.getElementsByName('CHEST_PAIN')[0].value
+                // Add other form fields as needed
+            };
+    
+            // Make a POST request to the Flask backend
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Display results
+                    var resultsDiv = document.getElementById('prediction-results');
+                    resultsDiv.innerHTML = `<h2>Predictions:</h2>
+                                            <p>${data.predictions.join(',')}</p>
+                                            <p>Probability: ${data.probability_positive_class}%</p>`;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+    
+
+</body>
+
+</html>

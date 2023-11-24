@@ -31,7 +31,9 @@ function App() {
 
   const handlePredict = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/predict', formData);
+/*       https://cancer-be-1.onrender.com
+subhodeep2000.pythonanywhere.com
+ */      const response = await axios.post('https://cancer-be.azurewebsites.net/predict', formData);
       setPredictions(response.data.predictions);
       setProbability(response.data.probability_positive_class);
     } catch (error) {
